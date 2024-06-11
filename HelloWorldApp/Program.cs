@@ -1,2 +1,13 @@
-﻿// See https://aka.ms/new-console-template for more information
-Console.WriteLine("Hello, World!");
+﻿/// <summary>
+/// Represents the main namespace for the HelloWorldApp.
+/// </summary>
+namespace HelloWorldApp
+{
+    static class Program
+    {
+        static void Main(string[] args)
+        {
+            Console.WriteLine("Hello World!");
+        }
+    }
+}
