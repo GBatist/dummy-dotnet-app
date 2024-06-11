@@ -16,12 +16,7 @@ jobs:
       - name: Build Docker image
         run: docker build -t helloworldapp ./HelloWorldApp
 
-      - name: Authenticate Snyk CLI
-        env:
-          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-        run: snyk auth $SNYK_TOKEN
-
-      - name: Run Snyk Monitor
+      - name: Run Snyk Monitor (authenticated)
         uses: snyk/actions/docker@master
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
@@ -30,8 +25,7 @@ jobs:
           args: --file=./HelloWorldApp --org=${{ secrets.SNYK_ORG_ID }} --exclude-base-image-vulns --project-environment=backend --project-lifecycle=sandbox --project-business-criticality=medium --project-tags=department=corpis,team=appsec
           command: monitor
 
-      - name: Run Snyk Test
-        continue-on-error: true
+      - name: Run Snyk Test (authenticated)
         uses: snyk/actions/docker@master
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
