@@ -19,3 +19,5 @@ As you can see, we are creating the project as a `console` application. To learn
 ## Misc
 
 To get more information about how to use Chainguard's images [check the documentation here](https://edu.chainguard.dev/chainguard/chainguard-images/reference/dotnet-sdk/).
+
+Don't forget to set up your action secrets! I wasted hours dealing with pipeline errors due to authentication problems, only to find out that I hadn't configured the action secret with Snyk's token.
