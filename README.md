@@ -15,3 +15,7 @@ dotnet new console -o HelloWorldApp
 ```
 
 As you can see, we are creating the project as a `console` application. To learn about other types of projects, [check the documentation here](https://learn.microsoft.com/en-us/dotnet/core/tools/dotnet-new).
+
+## Misc
+
+To get more information about how to use Chainguard's images [check the documentation here](https://edu.chainguard.dev/chainguard/chainguard-images/reference/dotnet-sdk/).
