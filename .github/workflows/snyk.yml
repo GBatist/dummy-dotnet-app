@@ -21,7 +21,7 @@ jobs:
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
-          image: helloworldapp
+          image: docker.io/library/helloworldapp
           args: --file=./HelloWorldApp -d --org=${{ secrets.SNYK_ORG_ID }} --exclude-base-image-vulns --project-environment=backend --project-lifecycle=sandbox --project-business-criticality=low --project-tags=department=corpis,team=appsec
           command: monitor
 
@@ -32,7 +32,7 @@ jobs:
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
-          image: helloworldapp
+          image: docker.io/library/helloworldapp
           args: --file=./HelloWorldApp -d --org=${{ secrets.SNYK_ORG_ID }} --severity-threshold=medium --fail-on=upgradable --exclude-base-image-vulns --json-file-output=snyk_report.json
           command: test
 
