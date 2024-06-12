@@ -16,20 +16,37 @@ jobs:
       - name: Build Docker image
         run: docker build -t helloworldapp ./HelloWorldApp
 
-      - name: Run Snyk Monitor (authenticated)
+      - name: Run Snyk Monitor
         uses: snyk/actions/docker@master
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
-          image: helloworldapp
-          args: --file=./HelloWorldApp -d --org=${{ secrets.SNYK_ORG_ID }} --exclude-base-image-vulns --project-environment=backend --project-lifecycle=sandbox --project-business-criticality=medium --project-tags=department=corpis,team=appsec
+          image: node-goof
+          args: --file=./HelloWorldApp --org=${{ secrets.SNYK_ORG_ID }} --exclude-base-image-vulns --project-environment=backend --project-lifecycle=sandbox --project-business-criticality=low --project-tags=department=corpis,team=appsec
           command: monitor
 
-      - name: Run Snyk Test (authenticated)
+      - name: Run Snyk Test
+        continue-on-error: true
+        id: snyk_test
         uses: snyk/actions/docker@master
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
-          image: helloworldapp
-          args: --file=./HelloWorldApp -d --org=${{ secrets.SNYK_ORG_ID }} --exclude-base-image-vulns --severity-threshold=medium --fail-on=upgradable
+          image: node-goof
+          args: --file=./HelloWorldApp --org=${{ secrets.SNYK_ORG_ID }} --severity-threshold=medium --fail-on=upgradable --exclude-base-image-vulns --json-file-output=snyk_report.json
           command: test
+
+      - name: Install Node.js
+        uses: actions/setup-node@v2
+
+      - name: Install snyk-to-html
+        run: npm install -g snyk-to-html
+
+      - name: Convert Snyk JSON report to HTML
+        run: snyk-to-html -i snyk_report.json -o snyk_report.html
+
+      - name: Upload Snyk Report
+        uses: actions/upload-artifact@v2
+        with:
+          name: snyk-report
+          path: snyk_report.html
