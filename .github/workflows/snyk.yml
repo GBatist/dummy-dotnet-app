@@ -13,27 +13,27 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Build Docker image
+      - name: Build Docker Image
         run: docker build -t helloworldapp ./HelloWorldApp
 
-#      - name: Run Snyk Monitor
-#        uses: snyk/actions/docker@master
-#        env:
-#          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-#        with:
-#          image: node-goof
-#          args: --file=./HelloWorldApp --org=${{ secrets.SNYK_ORG_ID }} --exclude-base-image-vulns --project-environment=backend --project-lifecycle=sandbox --project-business-criticality=low --project-tags=department=corpis,team=appsec
-#          command: monitor
+      - name: Run Snyk Container Monitor
+        uses: snyk/actions/docker@master
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          image: helloworldapp
+          args: --file=./HelloWorldApp --org=${{ secrets.SNYK_ORG_ID }} --exclude-base-image-vulns --project-environment=backend --project-lifecycle=sandbox --project-business-criticality=low --project-tags=department=corpis,team=appsec
+          command: monitor
 
-      - name: Run Snyk Test
+      - name: Run Snyk Container Test
         continue-on-error: true
         id: snyk_test
         uses: snyk/actions/docker@master
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
-          image: node-goof
-          args: --file=./HelloWorldApp --org=${{ secrets.SNYK_ORG_ID }} --severity-threshold=medium --fail-on=upgradable --exclude-base-image-vulns --json-file-output=snyk_report.json
+          image: helloworldapp
+          args: --file=./HelloWorldApp -d --org=${{ secrets.SNYK_ORG_ID }} --severity-threshold=medium --fail-on=upgradable --exclude-base-image-vulns --json-file-output=snyk_report.json
           command: test
 
       - name: Install Node.js
