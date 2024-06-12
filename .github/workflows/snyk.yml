@@ -22,7 +22,7 @@ jobs:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
           image: helloworldapp
-          args: --file=./HelloWorldApp/Dockerfile -d --org=${{ secrets.SNYK_ORG_ID }} --exclude-base-image-vulns --project-environment=backend --project-lifecycle=sandbox --project-business-criticality=low --project-tags=department=corpis,team=appsec
+          args: --file=./HelloWorldApp/Dockerfile --org=${{ secrets.SNYK_ORG_ID }} --exclude-base-image-vulns --project-environment=backend --project-lifecycle=sandbox --project-business-criticality=low --project-tags=department=corpis,team=appsec
           command: monitor
 
       - name: Run Snyk Container Test
@@ -33,7 +33,7 @@ jobs:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
           image: helloworldapp
-          args: --file=./HelloWorldApp/Dockerfile -d --org=${{ secrets.SNYK_ORG_ID }} --severity-threshold=medium --fail-on=upgradable --exclude-base-image-vulns --json-file-output=snyk_report.json
+          args: --file=./HelloWorldApp/Dockerfile --org=${{ secrets.SNYK_ORG_ID }} --severity-threshold=medium --fail-on=upgradable --exclude-base-image-vulns --json-file-output=snyk_report.json
           command: test
 
       - name: Install Node.js
