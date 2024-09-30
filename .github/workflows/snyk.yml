@@ -52,7 +52,7 @@ jobs:
           path: snyk_report.html
 
       - name: Upload SARIF Report
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: snyk-sarif-report
           path: snyk_report.sarif
