@@ -33,7 +33,7 @@ jobs:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
           image: helloworldapp
-          args: --file=./HelloWorldApp/Dockerfile --org=${{ secrets.SNYK_ORG_ID }} --severity-threshold=medium --fail-on=upgradable --exclude-base-image-vulns --json-file-output=snyk_report.json
+          args: --file=./HelloWorldApp/Dockerfile --org=${{ secrets.SNYK_ORG_ID }} --severity-threshold=medium --fail-on=upgradable --exclude-base-image-vulns --sarif-file-output=snyk_report.sarif
           command: test
 
       - name: Install Node.js
@@ -50,3 +50,9 @@ jobs:
         with:
           name: snyk-report
           path: snyk_report.html
+
+      - name: Upload SARIF Report
+        uses: actions/upload-artifact@v2
+        with:
+          name: snyk-sarif-report
+          path: snyk_report.sarif
