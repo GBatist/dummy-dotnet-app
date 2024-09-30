@@ -36,6 +36,9 @@ jobs:
           args: --file=./HelloWorldApp/Dockerfile --org=${{ secrets.SNYK_ORG_ID }} --severity-threshold=medium --fail-on=upgradable --exclude-base-image-vulns --sarif-file-output=snyk_report.sarif
           command: test
 
+      - name: List files for debugging
+        run: ls -la
+
       - name: Install Node.js
         uses: actions/setup-node@v2
 
