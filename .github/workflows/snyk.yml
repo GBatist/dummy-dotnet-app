@@ -37,7 +37,7 @@ jobs:
           command: test
 
       - name: List files for debugging
-        run: ls -la
+        run: find . -type f -name "*"
 
       - name: Install Node.js
         uses: actions/setup-node@v2
