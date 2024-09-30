@@ -35,25 +35,7 @@ jobs:
           image: helloworldapp
           args: --file=./HelloWorldApp/Dockerfile --org=${{ secrets.SNYK_ORG_ID }} --severity-threshold=medium --fail-on=upgradable --exclude-base-image-vulns --sarif-file-output=snyk.sarif
           command: test
-
-      - name: List files for debugging
-        run: find . -type f -name "*"
-
-      - name: Install Node.js
-        uses: actions/setup-node@v2
-
-      - name: Install snyk-to-html
-        run: npm install -g snyk-to-html
-
-      - name: Convert Snyk JSON report to HTML
-        run: snyk-to-html -i snyk_report.json -o snyk_report.html
-
-      - name: Upload Snyk Report
-        uses: actions/upload-artifact@v3
-        with:
-          name: snyk-report
-          path: snyk_report.html
-
+          
       - name: Upload SARIF Report
         uses: actions/upload-artifact@v3
         with:
