@@ -33,7 +33,7 @@ jobs:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
           image: helloworldapp
-          args: --file=./HelloWorldApp/Dockerfile --org=${{ secrets.SNYK_ORG_ID }} --severity-threshold=medium --fail-on=upgradable --exclude-base-image-vulns --sarif-file-output=snyk_report.sarif
+          args: --file=./HelloWorldApp/Dockerfile --org=${{ secrets.SNYK_ORG_ID }} --severity-threshold=medium --fail-on=upgradable --exclude-base-image-vulns --sarif-file-output=snyk.sarif
           command: test
 
       - name: List files for debugging
@@ -58,4 +58,4 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: snyk-sarif-report
-          path: snyk_report.sarif
+          path: snyk.sarif
